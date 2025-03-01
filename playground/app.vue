@@ -18,8 +18,8 @@
 					for="images"
 					class="drop-container"
 					@dragover.prevent
-					@dragenter.prevent="(e: any) => {e.target.classList.add('drag-active')}"
-					@dragleave.prevent="(e: any) => {e.target.classList.remove('drag-active')}"
+					@dragenter.prevent="(e: any) => { e.target.classList.add('drag-active') }"
+					@dragleave.prevent="(e: any) => { e.target.classList.remove('drag-active') }"
 					@drop.prevent="handleDrop"
 				>
 				<!-- <input id="images" type="file" accept="image/*" required @input="otherFileInput"> -->
@@ -50,8 +50,9 @@ const { handleFileInput, files } = useFileStorage({ clearOldFiles: true })
 
 const fileInput = ref<HTMLInputElement>()
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleDrop = (e: any) => {
-	alert("drag and drop functionality does not work currently, you can try to fix it in the repo :)")
+	alert('drag and drop functionality does not work currently, you can try to fix it in the repo :)')
 	// e.preventDefault()
 	// e.target.classList.remove("drag-active")
 	// if (fileInput.value) return
@@ -76,9 +77,7 @@ const submit = async () => {
 }
 </script>
 
-
 <style>
-
 pre {
 	width: 80%;
 	overflow: hidden;
@@ -212,7 +211,6 @@ input[type=file]::file-selector-button:hover, button:hover {
 .drop-container.drag-active .drop-title {
   color: #222;
 }
-
 
 .main {
 	font-family: 'Courier New', Courier, monospace;

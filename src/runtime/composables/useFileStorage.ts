@@ -32,7 +32,7 @@ export default function (options: Options = { clearOldFiles: true }) {
 		files.value.splice(0, files.value.length)
 	}
 
-
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleFileInput = async (event: any) => {
 		if (options.clearOldFiles) {
 			clearFiles()

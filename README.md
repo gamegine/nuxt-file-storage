@@ -20,9 +20,22 @@ Easy solution to store files in your nuxt apps. Be able to upload files from the
 
 -  📁 &nbsp;Get files from file input and make them ready to send to backend
 -  ⚗️ &nbsp;Serialize files in the backend to be able to use them appropriately
--  🖴 &nbsp;Store files in a specified location in your Nuxt backend with Nitro Engine
+-  💿 &nbsp;Store files in a specified location in your Nuxt backend with Nitro Engine
 
 ## Quick Setup
+
+<details>
+  <summary>nuxi module</summary>
+
+Install the module to your Nuxt application with one command:
+
+```bash
+npx nuxi module add my-module
+```
+
+That's it! You can now use My Module in your Nuxt app ✨
+
+</details>
 
 1. Add `nuxt-file-storage` dependency to your project
 
@@ -173,12 +186,35 @@ Want to add some feature? PRs are welcome!
 - install the dependencies
 - prepare the project
 - run dev server
-```bash
-git clone https://github.com/NyllRE/nuxt-file-storage && cd nuxt-file-storage
-npm i
-npm run dev:prepare
-npm run dev
-```
+<details>
+  <summary>Local development</summary>
+  
+  ```bash
+  git clone https://github.com/NyllRE/nuxt-file-storage && cd nuxt-file-storage
+  # Install dependencies
+  npm install
+  
+  # Generate type stubs
+  npm run dev:prepare
+  
+  # Develop with the playground
+  npm run dev
+  
+  # Build the playground
+  npm run dev:build
+  
+  # Run ESLint
+  npm run lint
+  
+  # Run Vitest
+  npm run test
+  npm run test:watch
+  
+  # Release new version
+  npm run release
+  ```
+
+</details>
 
 
 <!-- Badges -->

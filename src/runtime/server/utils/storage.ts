@@ -1,7 +1,7 @@
-import { writeFile, rm, mkdir, readdir } from 'fs/promises'
-import { useRuntimeConfig } from '#imports'
+import { writeFile, rm, mkdir, readdir } from 'node:fs/promises'
+import { join } from 'node:path'
 import type { ServerFile } from '../../../types'
-import { join } from 'path'
+import { useRuntimeConfig } from '#imports'
 
 /**
  * @description Will store the file in the specified directory
@@ -19,7 +19,7 @@ import { join } from 'path'
  * import { ServerFile } from "nuxt-file-storage";
  *
  * const { file } = await readBody<{ files: ServerFile }>(event)
-
+ *
  * await storeFileLocally( file, 8, '/userFiles' )
  * ```
  */
@@ -31,17 +31,17 @@ export const storeFileLocally = async (
 	const { binaryString, ext } = parseDataUrl(file.content)
 	const location = useRuntimeConfig().public.fileStorage.mount
 
-	//? Extract the file extension from the original filename
+	// ? Extract the file extension from the original filename
 	const originalExt = file.name.toString().split('.').pop() || ext
 
-	const filename =
-		typeof fileNameOrIdLength == 'number'
+	const filename
+		= typeof fileNameOrIdLength == 'number'
 			? `${generateRandomId(fileNameOrIdLength)}.${originalExt}`
-			: `${fileNameOrIdLength}.${originalExt}`
+			: `${fileNameOrIdLength}`
 
 	await mkdir(join(location, filelocation), { recursive: true })
 
-	await writeFile(join(location, filelocation, filename), binaryString as any, {
+	await writeFile(join(location, filelocation, filename), binaryString as Buffer, {
 		flag: 'w',
 	})
 
@@ -56,10 +56,9 @@ export const storeFileLocally = async (
  */
 export const getFileLocally = (filename: string, filelocation: string = ''): string => {
 	const location = useRuntimeConfig().public.fileStorage.mount
-	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation;
+	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation
 	return join(location, normalizedFilelocation, filename)
 }
-
 
 /**
  * @description Get all files in the specified directory
@@ -68,10 +67,9 @@ export const getFileLocally = (filename: string, filelocation: string = ''): str
  */
 export const getFilesLocally = async (filelocation: string = ''): Promise<string[]> => {
 	const location = useRuntimeConfig().public.fileStorage.mount
-	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation;
+	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation
 	return await readdir(join(location, normalizedFilelocation)).catch(() => [])
 }
-
 
 /**
  * @param filename the name of the file you want to delete
@@ -83,10 +81,9 @@ export const getFilesLocally = async (filelocation: string = ''): Promise<string
  */
 export const deleteFile = async (filename: string, filelocation: string = '') => {
 	const location = useRuntimeConfig().public.fileStorage.mount
-	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation;
+	const normalizedFilelocation = filelocation.startsWith('/') ? filelocation.slice(1) : filelocation
 	await rm(join(location, normalizedFilelocation, filename))
 }
-
 
 /**
  * @description generates a random ID with the specified length
@@ -113,7 +110,7 @@ const generateRandomId = (length: number) => {
  * ```
  */
 export const parseDataUrl = (file: string):
-	{binaryString: Buffer, ext: string} => {
+	{ binaryString: Buffer, ext: string } => {
 	const arr: string[] = file.split(',')
 	const mimeMatch = arr[0].match(/:(.*?);/)
 	if (!mimeMatch) {

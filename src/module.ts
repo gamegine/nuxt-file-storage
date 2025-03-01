@@ -10,6 +10,7 @@ import defu from 'defu'
 // import { version } from '../package.json'
 
 import type { ModuleOptions } from './types'
+
 export type * from './types'
 
 export default defineNuxtModule<ModuleOptions>({
@@ -17,12 +18,16 @@ export default defineNuxtModule<ModuleOptions>({
 		name: 'nuxt-file-storage',
 		configKey: 'fileStorage',
 	},
-	//? Default configuration options of the Nuxt module
-	//! no defaults for now
+	// Default configuration options for the module, can also be a function returning those
+	// ! no defaults for now
 	// defaults: {
 	// 	version: '0.0.0',
 	// },
-	setup(options, nuxt) {
+	// // Shorthand sugar to register Nuxt hooks
+	// hooks: {},
+
+  setup(options, nuxt) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const config = nuxt.options.runtimeConfig as any
 		config.public.fileStorage = defu(config.public.fileStorage, {
 			...options,
@@ -32,7 +37,8 @@ export default defineNuxtModule<ModuleOptions>({
 			logger.error(
 				'Please provide a mount path for the file storage module in your nuxt.config.js',
 			)
-		} else {
+		}
+ else {
 			logger.ready(
 				`Nuxt File Storage has mounted successfully`,
 			)
@@ -49,8 +55,10 @@ export default defineNuxtModule<ModuleOptions>({
 		// 	// 	.catch(() => {})
 		// }
 
-		const resolve = createResolver(import.meta.url).resolve
+		// Create resolver to resolve relative paths
+		const { resolve } = createResolver(import.meta.url)
 
+		// Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
 		addImportsDir(resolve('runtime/composables'))
 		addServerScanDir(resolve('./runtime/server'))
 	},

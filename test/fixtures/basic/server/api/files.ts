@@ -1,17 +1,11 @@
 import { storeFileLocally } from '../../../../../src/runtime/server/utils/storage'
+import type { ServerFile } from '../../../../../src/types'
 
 export default defineEventHandler(async (event) => {
-	const body = await readBody<{ files: File[] }>(event)
-	console.dir(body)
-
+	const { files } = await readBody<{ files: ServerFile[] }>(event)
 	const fileNames: string[] = []
-	for (const file of body.files) {
-		fileNames.push(await storeFileLocally(file.content, file.name))
+	for (const file of files) {
+		fileNames.push(await storeFileLocally(file, file.name, '/specificFolder'))
 	}
 	return fileNames
 })
-
-interface File {
-	name: string
-	content: string
-}

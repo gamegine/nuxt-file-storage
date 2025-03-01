@@ -1,4 +1,4 @@
 export default defineNuxtConfig({
-	ssr: true,
 	modules: ['../../../src/module'],
+	ssr: true,
 })
